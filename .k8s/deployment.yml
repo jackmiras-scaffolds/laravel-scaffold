@@ -1,0 +1,54 @@
+---
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: <APP_NAME>
+  namespace: <K8S_NAMESPACE>
+  labels:
+    app: <APP_NAME>
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: <APP_NAME>
+      tier: <APP_TYPE>
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: <APP_NAME>
+        tier: <APP_TYPE>
+    spec:
+      containers:
+        - image: <DOCKER_TAG>
+          name: <CONTAINER_NAME>
+          ports:
+            - containerPort: 5000
+              name: http
+          resources:
+            requests:
+              memory: 1Gi
+              cpu: 1
+            limits:
+              memory: 1Gi
+              cpu: 1
+          livenessProbe:
+            httpGet:
+              path: /health-check
+              port: 5000
+            initialDelaySeconds: 5
+            successThreshold: 1
+            periodSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /health-check
+              port: 5000
+            initialDelaySeconds: 5
+            successThreshold: 3
+            periodSeconds: 5
+      imagePullSecrets:
+        - name: <IMAGE_PULL_SECRETS>-registry-secret

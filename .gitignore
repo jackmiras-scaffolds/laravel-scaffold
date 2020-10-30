@@ -354,6 +354,9 @@ fabric.properties
 # Build data
 /build/
 
+# Code coverage
+tests/Coverage
+
 ### SublimeText ###
 # Cache files for Sublime Text
 *.tmlanguage.cache

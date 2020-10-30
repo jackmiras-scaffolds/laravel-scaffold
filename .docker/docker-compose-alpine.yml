@@ -5,15 +5,14 @@ services:
     container_name: laravel_scaffold
     command: >-
       sh -c "
-        apt-get install php7.4-xdebug && composer install ;\
-        cp xdebug.ini /etc/php/7.4/mods-available/xdebug.ini ;\
+        apk add php-xdebug && composer install ;\
+        cp xdebug.ini /etc/php7/conf.d/00_xdebug.ini ;\
         php artisan serve --host 0.0.0.0 --port 80"
     ports:
       - "80:80"
     env_file:
       - .env
     volumes:
-      - xdebug.ini
       - .:/var/www/html:rw
     networks:
       - app_network

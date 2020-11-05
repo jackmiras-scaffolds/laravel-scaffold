@@ -9,7 +9,7 @@ services:
         cp xdebug.ini /etc/php/7.4/mods-available/xdebug.ini ;\
         php artisan serve --host 0.0.0.0 --port 80"
     ports:
-      - "80:80"
+      - "8000:80"
     env_file:
       - .env
     volumes:

@@ -16,7 +16,7 @@ function configure_xdebug() {
             readonly XDEBUG_HOST=$(grep nameserver /etc/resolv.conf | cut -d ' ' -f2)
         else
             # If it's running in Linux
-            readonly XDEBUG_HOST=$(hostname -I | td -d ' ')
+            readonly XDEBUG_HOST=$(hostname -I | tr -d ' ')
         fi
     elif [[ "$(uname -s)" == "Darwin" ]]; then
         # If it's running in macOS
@@ -32,7 +32,7 @@ function helper_commands() {
         # Run an artisan command inside the app container.
         docker-compose run --rm -w $WORKDIR $DOCKER_SERVICE_NAME "php $@"
     fi
-    
+
     if [[ "$1" == "phpunit" ]]; then
         # Run an phpunit command inside the app container.
         docker-compose run --rm -w $WORKDIR $DOCKER_SERVICE_NAME "./vendor/bin/$@"

@@ -851,3 +851,6 @@ MigrationBackup/
 
 supervisord.log
 supervisord.
+
+### Xdebug ###
+.docker/xdebug.ini

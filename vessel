@@ -16,7 +16,7 @@ function configure_xdebug() {
             readonly XDEBUG_HOST=$(grep nameserver /etc/resolv.conf | cut -d ' ' -f2)
         else
             # If it's running in Linux
-            readonly XDEBUG_HOST=$(hostname -I | tr -d ' ')
+            readonly XDEBUG_HOST=$(hostname -I | cut -d ' ' -f1)
         fi
     elif [[ "$(uname -s)" == "Darwin" ]]; then
         # If it's running in macOS

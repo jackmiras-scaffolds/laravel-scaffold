@@ -9,6 +9,8 @@ readonly DOCKER_SERVICE_NAME="app"
 readonly DOCKER_SERVICE_CONTAINER_NAME="laravel_scaffold"
 
 function configure_xdebug() {
+    cp .docker/xdebug-base.ini .docker/xdebug.ini
+
     if [[ "$(uname -s)" == "Linux" ]]; then
         if [[ "$(< /proc/version)" == *@(microsoft)* ]]; then
             # If it's running in WSL

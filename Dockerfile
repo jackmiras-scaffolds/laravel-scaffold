@@ -43,7 +43,6 @@ RUN apt-get update -y && apt-get install -y php7.4-common \
     php7.4-readline \
     php7.4-gd \
     php7.4-imap \
-    php7.4-xdebug \
     php-igbinary \
     php-mongodb \
     php-redis

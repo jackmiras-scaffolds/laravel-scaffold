@@ -1,6 +1,5 @@
 #!/bin/bash
 set -euo pipefail
-IFS=$'\n\t'
 
 # Workdir defined at Dockerfile
 readonly WORKDIR="/var/www/html"
@@ -30,17 +29,17 @@ function configure_xdebug() {
 function helper_commands() {
     if [[ "$1" == "artisan" ]]; then
         # Run an artisan command inside the app container.
-        docker-compose run --rm -w $WORKDIR $DOCKER_SERVICE_NAME "php $@"
+        docker-compose exec $DOCKER_SERVICE_NAME sh -c "cd ${WORKDIR} && php $*"
     fi
 
     if [[ "$1" == "phpunit" ]]; then
         # Run an phpunit command inside the app container.
-        docker-compose run --rm -w $WORKDIR $DOCKER_SERVICE_NAME "./vendor/bin/$@"
+        docker-compose exec $DOCKER_SERVICE_NAME sh -c "cd ${WORKDIR} && ./vendor/bin/$*"
     fi
 
     if [[ "$1" == "composer" ]]; then
         # Run an composer command inside the app container.
-        docker-compose run --rm -w $WORKDIR $DOCKER_SERVICE_NAME "$@"
+        docker-compose exec $DOCKER_SERVICE_NAME sh -c "cd ${WORKDIR} && $*"
     fi
 }
 

@@ -318,7 +318,12 @@ Temporary Items
 
 # User-specific stuff
 .idea/*
+!.idea/php.xml
 !.idea/workspace.xml
+!.idea/commandlinetools
+!.idea/inspectionProfiles
+!.idea/php-test-framework.xml
+!.idea/php-docker-settings.xml
 
 # CMake
 cmake-build-*/

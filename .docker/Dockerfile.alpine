@@ -1,4 +1,4 @@
-FROM alpine:latest
+FROM alpine:edge
 
 WORKDIR /var/www/html/
 
@@ -13,11 +13,6 @@ RUN sed -i 's/bin\/ash/bin\/bash/g' /etc/passwd
 # Installing NGINX
 RUN apk add --no-cache nginx
 
-# Instaling PHP
-ADD https://dl.bintray.com/php-alpine/key/php-alpine.rsa.pub /etc/apk/keys/php-alpine.rsa.pub
-RUN apk --update-cache add ca-certificates
-RUN echo "https://dl.bintray.com/php-alpine/v3.11/php-7.4" >> /etc/apk/repositories
-
 RUN apk add --no-cache php \
     php-common \
     php-fpm \
@@ -28,13 +23,12 @@ RUN apk add --no-cache php \
     php-openssl \
     php-mbstring \
     php-json \
+    php-cli \
     php-xml \
     php-dom \
     php-sqlite3 \
     php-mysqli \
-    php-redis
-
-RUN ln -s /usr/bin/php7 /usr/bin/php
+    php7-pecl-redis
 
 # Installing composer
 RUN curl -sS https://getcomposer.org/installer -o composer-setup.php

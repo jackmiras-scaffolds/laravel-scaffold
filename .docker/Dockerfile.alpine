@@ -42,12 +42,12 @@ RUN php composer-setup.php --install-dir=/usr/local/bin --filename=composer
 RUN rm -rf composer-setup.php
 
 # Configure php-fpm
-COPY php-fpm.conf /etc/php7/php-fpm.conf
-COPY fastcgi-php.conf /etc/nginx/fastcgi-php.conf
+COPY .docker/php-fpm.conf /etc/php7/php-fpm.conf
+COPY .docker/fastcgi-php.conf /etc/nginx/fastcgi-php.conf
 RUN mkdir -p /run/php/ && touch /run/php/php7.4-fpm.pid
 
 # Configure nginx
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY .docker/nginx.conf /etc/nginx/conf.d/default.conf
 
 RUN echo "daemon off;" >> /etc/nginx/nginx.conf
 RUN mkdir -p /run/nginx/ && touch /run/nginx/nginx.pid
@@ -57,7 +57,7 @@ RUN ln -sf /dev/stderr /var/log/nginx/error.log
 
 # Configure supervisor
 RUN mkdir -p /etc/supervisor.d/
-COPY supervisord.conf /etc/supervisor.d/supervisord.ini
+COPY .docker/supervisord.conf /etc/supervisor.d/supervisord.ini
 
 EXPOSE 80
 CMD ["supervisord", "-c", "/etc/supervisor.d/supervisord.ini"]

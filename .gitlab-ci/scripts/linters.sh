@@ -6,7 +6,10 @@ echo "##########################################################################
 echo "# PHP_CodeSniffer                                                              #"
 echo "################################################################################"
 
-./vendor/bin/phpcs --colors --standard=phpcs.xml app/ routes/ config/ database/
+./vendor/bin/phpcs \
+	--colors \
+	--runtime-set ignore_warnings_on_exit true \
+	--standard=phpcs.xml app/ routes/ config/ database/
 
 echo "################################################################################"
 echo "# PHP Mess Detector                                                            #"

@@ -350,12 +350,6 @@ fabric.properties
 # Covers PHPUnit
 # Reference: https://phpunit.de/
 
-# Generated files
-
-# PHPUnit
-/app/phpunit.xml
-/phpunit.xml
-
 # Build data
 /build/
 

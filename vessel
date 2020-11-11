@@ -54,7 +54,7 @@ function docker_commands() {
         docker-compose down --remove-orphans
     fi
 
-    if [[ "$1" == "access" ]]; then
+    if [[ "$1" == "bash" ]]; then
         docker exec -it $DOCKER_SERVICE_CONTAINER_NAME /bin/bash
     fi
 

@@ -114,9 +114,6 @@ function main() {
 
     helper_commands "$@"
     docker_commands "$@"
-
-    # Configure Git hooks to the project root.
-    composer cghooks add
     
     continuous_integration "$@"
 }

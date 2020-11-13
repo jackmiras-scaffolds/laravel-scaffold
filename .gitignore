@@ -853,3 +853,6 @@ supervisord.
 
 ### Xdebug ###
 .docker/xdebug.ini
+
+### Composer Git Hooks ###
+cghooks.lock

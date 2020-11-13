@@ -19,6 +19,7 @@ RUN apk add --no-cache php \
     php-opcache \
     php-zip \
     php-phar \
+    php-iconv \
     php-cli \
     php-curl \
     php-openssl \

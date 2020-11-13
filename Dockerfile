@@ -19,15 +19,20 @@ RUN apk add --no-cache php \
     php-opcache \
     php-zip \
     php-phar \
+    php-cli \
     php-curl \
     php-openssl \
     php-mbstring \
+    php-tokenizer \
+    php-fileinfo \
     php-json \
-    php-cli \
     php-xml \
+    php-xmlwriter \
+    php-simplexml \
     php-dom \
     php-sqlite3 \
     php-mysqli \
+    php-tokenizer \
     php7-pecl-redis
 
 # Installing composer

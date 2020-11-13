@@ -53,7 +53,7 @@
                 "./vessel unit-tests",
                 "./vessel feature-tests"
             ],
-            "post-merge": "composer install"
+            "post-merge": "./vessel composer install"
         }
     },
     "autoload": {

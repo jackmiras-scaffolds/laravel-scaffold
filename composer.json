@@ -44,7 +44,6 @@
         },
         "hooks": {
             "pre-commit": [
-                "echo Committing as $(git config user.name)",
                 "./vessel fix-linters",
                 "./vessel linters"
             ],

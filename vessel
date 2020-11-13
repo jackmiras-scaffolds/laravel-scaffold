@@ -107,6 +107,10 @@ function continuous_integration() {
     if [[ "$1" == "feature-tests" ]]; then
         docker-compose exec -T $DOCKER_SERVICE_NAME sh -c ".gitlab-ci/scripts/feature-tests.sh"
     fi
+
+    if [[ "$1" == "update-dependencies" ]]; then
+        docker-compose exec -T $DOCKER_SERVICE_NAME sh -c "cd ${WORKDIR} && composer install"
+    fi
 }
 
 function main() {

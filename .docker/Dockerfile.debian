@@ -30,6 +30,7 @@ RUN echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" | tee /etc
 
 RUN apt-get update -y && apt-get install -y php7.4-common \
     php7.4-fpm \
+    php7.4-pdo \
     php7.4-mbstring \
     php7.4-mysql \
     php7.4-sqlite3 \

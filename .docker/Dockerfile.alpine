@@ -13,6 +13,7 @@ RUN apk add bash && sed -i 's/bin\/ash/bin\/bash/g' /etc/passwd
 RUN apk add --no-cache php \
     php-common \
     php-fpm \
+    php-pdo \
     php-opcache \
     php-zip \
     php-phar \
@@ -29,7 +30,7 @@ RUN apk add --no-cache php \
     php-simplexml \
     php-dom \
     php-sqlite3 \
-    php-mysqli \
+    php-pdo_mysql \
     php-tokenizer \
     php7-pecl-redis
 

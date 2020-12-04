@@ -6,7 +6,8 @@ echo "##########################################################################
 echo "# PHP CS Fixer                                                                 #"
 echo "################################################################################"
 
-./vendor/bin/php-cs-fixer fix app
-./vendor/bin/php-cs-fixer fix routes
-./vendor/bin/php-cs-fixer fix config
-./vendor/bin/php-cs-fixer fix database
+./vendor/bin/php-cs-fixer \
+    --config=.php_cs \
+    --using-cache=no \
+    --stop-on-violation \
+    fix app routes config database database  

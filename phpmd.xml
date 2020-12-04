@@ -43,7 +43,6 @@
     <rule ref="rulesets/design.xml/DepthOfInheritance"/>
     <rule ref="rulesets/design.xml/CouplingBetweenObjects"/>
 
-    <rule ref="rulesets/naming.xml/ShortVariable"/>
     <rule ref="rulesets/naming.xml/LongVariable"/>
     <rule ref="rulesets/naming.xml/ShortMethodName">
         <properties>

@@ -29,8 +29,8 @@ RUN apk add --no-cache php \
     php-xmlwriter \
     php-simplexml \
     php-dom \
-    php-sqlite3 \
     php-pdo_mysql \
+    php-pdo_sqlite \
     php-tokenizer \
     php7-pecl-redis
 
@@ -42,10 +42,13 @@ RUN curl -sS https://getcomposer.org/installer -o composer-setup.php \
 # Configure php-fpm
 COPY .docker/php-fpm.conf /etc/php7/php-fpm.conf
 COPY .docker/fastcgi-php.conf /etc/nginx/fastcgi-php.conf
-RUN mkdir -p /run/php/ && touch /run/php/php7.4-fpm.pid
+
+RUN mkdir -p /run/php/ \
+    && touch /run/php/php7.4-fpm.pid \
+    && touch /run/php/php7.4-fpm.sock
 
 # Configure nginx
-COPY .docker/nginx.conf /etc/nginx/conf.d/default.conf
+COPY .docker/default.conf /etc/nginx/conf.d/default.conf
 
 RUN echo "daemon off;" >> /etc/nginx/nginx.conf \
     && mkdir -p /run/nginx/ && touch /run/nginx/nginx.pid \
@@ -54,7 +57,7 @@ RUN echo "daemon off;" >> /etc/nginx/nginx.conf \
 
 # Configure supervisor
 RUN mkdir -p /etc/supervisor.d/
-COPY .docker/supervisord.conf /etc/supervisor.d/supervisord.ini
+COPY .docker/supervisord.ini /etc/supervisor.d/supervisord.ini
 
 # Building process
 COPY . .

@@ -35,12 +35,12 @@ if (!function_exists('secret')) {
 
 if (!function_exists('fromSecretsManager')) {
     /**
-     * Gets the value of an environment variable.
+     * Gets a secret value from AWS Secrets Manager.
      *
      * @param  string  $key
-     * @return mixed
+     * @return string
      */
-    function fromSecretsManager($key)
+    function fromSecretsManager($key): string
     {
         $secretName = 'LARAVEL_SCAFFOLD';
 

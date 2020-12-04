@@ -3,7 +3,7 @@ set -euo pipefail
 IFS=$'\n\t'
 
 echo "################################################################################"
-echo "# Unit Tests                                                                   #"
+echo "# Running tests with coverage                                                  #"
 echo "################################################################################"
 
-./vendor/bin/pest tests/Unit/
+./vendor/bin/pest --coverage --min=90

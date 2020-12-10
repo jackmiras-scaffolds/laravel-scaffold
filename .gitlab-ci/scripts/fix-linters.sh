@@ -10,4 +10,4 @@ echo "##########################################################################
     --config=.php_cs \
     --using-cache=no \
     --stop-on-violation \
-    fix app routes config database database  
+    fix app routes config database database

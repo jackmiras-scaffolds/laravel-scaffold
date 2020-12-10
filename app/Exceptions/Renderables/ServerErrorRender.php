@@ -12,7 +12,7 @@ trait ServerErrorRender
     {
         $error = resolve(Error::class);
         $error->message = 'server_error';
-        $error->help = $e->getMessage() ?? get_class($e);
+        $error->help = $e->getMessage() ?: get_class($e);
 
         return response($error->toJson(), Response::HTTP_BAD_REQUEST);
     }

@@ -51,7 +51,7 @@ function helper_commands() {
 
   if [[ "$1" == "composer" ]]; then
     # Run an composer command inside the app container.
-    docker-compose exec $DOCKER_SERVICE_NAME sh -c "cd ${WORKDIR} && $*"
+    docker-compose exec -T $DOCKER_SERVICE_NAME sh -c "cd ${WORKDIR} && $*"
   fi
 }
 
@@ -107,6 +107,10 @@ function continuous_integration() {
 
   if [[ "$1" == "fix-linters" ]]; then
     docker-compose exec -T $DOCKER_SERVICE_NAME sh -c ".gitlab-ci/scripts/fix-linters.sh"
+  fi
+
+  if [[ "$1" == "static-analysis" ]]; then
+    docker-compose exec -T $DOCKER_SERVICE_NAME sh -c ".gitlab-ci/scripts/static-analysis.sh"
   fi
 
   if [[ "$1" == "update-dependencies" ]]; then

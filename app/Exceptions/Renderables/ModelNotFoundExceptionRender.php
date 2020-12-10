@@ -12,7 +12,7 @@ trait ModelNotFoundExceptionRender
     public function renderModelNotFound(ModelNotFoundException $e): Response
     {
         $replacement = [
-            'id' => Arr::first($e->getIds()),
+            'id' => collect($e->getIds())->first(),
             'model' => Arr::last(explode('\\', $e->getModel())),
         ];
 

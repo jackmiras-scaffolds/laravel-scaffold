@@ -32,6 +32,10 @@ function helper_commands() {
   if [[ "$1" == "artisan" ]]; then
     # Run an artisan command inside the app container.
     docker-compose exec -T $DOCKER_SERVICE_NAME sh -c "cd ${WORKDIR} && php $*"
+
+    # Adjusting permissions in case a files are created
+    docker-compose exec -T $DOCKER_SERVICE_NAME sh -c "chown 1000:1000 -R app"
+    docker-compose exec -T $DOCKER_SERVICE_NAME sh -c "chown 1000:1000 -R resources"
   fi
 
   if [[ "$1" == "tinker" ]]; then

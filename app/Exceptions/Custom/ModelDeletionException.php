@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Exceptions;
+namespace App\Exceptions\Custom;
 
 use Illuminate\Support\Str;
 use Illuminate\Http\Response;
 
-class ModelDeletion extends ApplicationException
+class ModelDeletionException extends ApplicationException
 {
     private int $id;
     private string $model;
@@ -16,7 +16,7 @@ class ModelDeletion extends ApplicationException
         $this->model = $model;
     }
 
-    public function code(): int
+    public function status(): int
     {
         return Response::HTTP_BAD_REQUEST;
     }
@@ -26,10 +26,11 @@ class ModelDeletion extends ApplicationException
         return trans('exception.model_not_deleted.help');
     }
 
-    public function message(): string
+    public function error(): string
     {
-        $modelName = Str::afterLast($this->model, '\\');
-        $replacement = ['model' => $modelName, 'id' => $this->id];
-        return trans('exception.model_not_updated.message', $replacement);
+        return trans('exception.model_not_deleted.message', [
+            'id' => $this->id,
+            'model' => Str::afterLast($this->model, '\\')
+        ]);
     }
 }

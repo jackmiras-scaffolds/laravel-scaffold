@@ -1,19 +1,19 @@
 <?php
 
-namespace App\Exceptions;
+namespace App\Exceptions\Custom;
 
 use Exception;
-use App\Models\Error;
+use App\Exceptions\Error;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
 abstract class ApplicationException extends Exception
 {
-    abstract public function code(): int;
+    abstract public function status(): int;
 
     abstract public function help(): string;
 
-    abstract public function message(): string;
+    abstract public function error(): string;
 
     /**
     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
@@ -21,10 +21,9 @@ abstract class ApplicationException extends Exception
     public function render(Request $request): Response
     {
         $error = new Error();
-        $error->code = $this->code();
         $error->help = $this->help();
-        $error->message = $this->message();
+        $error->error = $this->error();
 
-        return response($error->toJson(), $this->code());
+        return response($error->toArray(), $this->status());
     }
 }

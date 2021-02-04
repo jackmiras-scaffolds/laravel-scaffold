@@ -3,20 +3,14 @@
 namespace App\Exceptions;
 
 use Throwable;
+use Illuminate\Support\Arr;
 use Illuminate\Http\Response;
 use Illuminate\Validation\ValidationException;
-use App\Exceptions\Renderables\ServerErrorRender;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use App\Exceptions\Renderables\ValidationExceptionRender;
-use App\Exceptions\Renderables\ModelNotFoundExceptionRender;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
 {
-    use ServerErrorRender;
-    use ValidationExceptionRender;
-    use ModelNotFoundExceptionRender;
-
     /**
      * A list of the exception types that are not reported.
      *
@@ -47,15 +41,32 @@ class Handler extends ExceptionHandler
     public function render($request, Throwable $e)
     {
         if ($e instanceof ValidationException) {
-            return $this->renderValidation($e);
+            $error = resolve(Error::class);
+            $error->help = $e->validator->errors()->first();
+            $error->error = trans('exception.data_validation');
+
+            return response($error->toArray(), Response::HTTP_BAD_REQUEST);
         }
 
         if ($e instanceof ModelNotFoundException) {
-            return $this->renderModelNotFound($e);
+            $replacement = [
+                'id' => Arr::first($e->getIds()),
+                'model' => Arr::last(explode('\\', $e->getModel())),
+            ];
+
+            $error = resolve(Error::class);
+            $error->help = trans('exception.model_not_found.help');
+            $error->error = trans('exception.model_not_found.error', $replacement);
+
+            return response($error->toArray(), Response::HTTP_NOT_FOUND);
         }
 
         if ($e->getCode() === Response::HTTP_INTERNAL_SERVER_ERROR) {
-            return $this->renderInternalServerError($e);
+            $error = resolve(Error::class);
+            $error->error = 'server_error';
+            $error->help = $e->getMessage() ?: get_class($e);
+
+            return response($error->toArray(), Response::HTTP_BAD_REQUEST);
         }
 
         return parent::render($request, $e);

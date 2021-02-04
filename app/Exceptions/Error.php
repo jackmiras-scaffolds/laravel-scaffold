@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Exceptions;
 
 use JsonSerializable;
 use Illuminate\Contracts\Support\Jsonable;
@@ -8,20 +8,18 @@ use Illuminate\Contracts\Support\Arrayable;
 
 class Error implements Arrayable, Jsonable, JsonSerializable
 {
-    public int $code;
     public string $help;
-    public string $message;
+    public string $error;
 
-    public function __construct(int $code = 400, string $help = '', string $message = '')
+    public function __construct(string $help = '', string $error = '')
     {
-        $this->code = $code;
         $this->help = $help;
-        $this->message = $message;
+        $this->error = $error;
     }
 
     public function toJson($options = 0)
     {
-        return (string) json_encode($this->jsonSerialize(), $options);
+        return json_encode($this->jsonSerialize(), $options);
     }
 
     public function jsonSerialize(): array
@@ -32,8 +30,7 @@ class Error implements Arrayable, Jsonable, JsonSerializable
     public function toArray(): array
     {
         return [
-            'code' => $this->code,
-            'message' => $this->message,
+            'error' => $this->error,
             'help' => $this->help,
         ];
     }

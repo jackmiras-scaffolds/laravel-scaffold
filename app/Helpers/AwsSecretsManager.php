@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Log;
 use Aws\Exception\CredentialsException;
 use Aws\SecretsManager\SecretsManagerClient;
 
-if (!function_exists('secret')) {
+if (!function_exists('getEnv')) {
     /**
      * Gets the value of an environment variable.
      *
@@ -13,7 +13,7 @@ if (!function_exists('secret')) {
      * @param  mixed  $default
      * @return mixed
      */
-    function secret($key, $default = null)
+    function getEnv($key, $default = null)
     {
         $value = fromSecretsManager($key);
 

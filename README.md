@@ -1,61 +1,76 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# Preface
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+This project is Laravel REST API that runs over a Docker container, interactions
+with these containers are interface by a shell script called vessel.
 
-## About Laravel
+## Docker
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+All content related to how the Docker image was build can be found at:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- .docker/
+- Dockerfile
+- docker-composer.yml
+- .dockerignore
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-## Learning Laravel
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Vessel
+Vessel was written to expose short versions of commands that are used too often
+when debugging, developing code, and executing CI actions such as running
+linters, fix-linters, and tests.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+For example, without vessel the process of executing a Laravel command inside
+the container to create a model would be  something like
+`docker-compose exec -T app sh -c "cd /var/www/html && php artisan make:model User"`
+with vessel the same result can be achieved by execution `./vessel artisan make:model User`.
 
-## Laravel Sponsors
+Another good example of vessel usage would be the up command. With `./vessel up`
+the docker-compose.yml file will be built but also the **xdebug.ini** file will
+be created with the right configs and your current IP address to make the usage
+of Xdebug possible. If you choose to start the container by running
+`docker-compose up` bear in mind that Xdebug will not work.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+### Available vessel commands
 
-### Premium Partners
+| Command                        | Description                                          |
+| ------------------------------ |------------------------------------------------------|
+| ./vessel up                    | Initialize docker-compose stack                      |
+| ./vessel down                  | Stop docker-compose stack                            |
+| ./vessel bash                  | Access bash of the app container                     |
+| ./vessel clean-all             | Prune all possible containers, volumes, and networks |
+| ./vessel artisan <ANY_COMMAND> | Run any Laravel artisan command                       |
+| ./vessel tinker                | Open a REPL for the Laravel framework                |
+| ./vessel composer              | Run any composer command                             |
+| ./vessel pest                  | Run test swite using Pest framework                  |
+| ./vessel tests                 | Run test swite with code coverage                    |
+| ./vessel linters               | Run linters                                          |
+| ./vessel fix-linters           | Run linter fixer                                     |
+| ./vessel update-dependencies   | Update composer dependencies                         |
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[OP.GG](https://op.gg)**
+___
 
-## Contributing
+## Linters
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+The project has PHP_CodeSniffer, PHP Mess Detector configured as linters, the files
+containing the rules used by them are phpmd.xml and phpcs.xml. As for fixers we have
+PHP CS Fixer configured, and its rules can be found at .php_cs.
 
-## Code of Conduct
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
 
-## Security Vulnerabilities
+_## Static Analysis
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+The project has PHPCPD, PSALM, and Larastan configured as linters. Larastan has also
+a file phpstan.neon containing the rules used, while the other two don't have any configuration file.
 
-## License
+__
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Text editors
+
+This project was mainly coded with VIM, but there is also a **.vscode** and **.idea** directories
+that holds configurations of VSCode|PHPStorm + Docker + Xdebug, and the configurations of linters.
+In order to make everything work in VSCode or PHPStorm you may need to install the following plugins
+**PHP Debug (VSCode only)**, **PHP Mess Detector**, **phpcs**, **php cs fixer**.
+
+This has been tested locally and there is no guarantee that it will work on other
+peoples machine. In any case this may be a head start if you wanna have this aspect
+of the project working in your machine.

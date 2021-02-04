@@ -63,7 +63,7 @@ containing the rules used by them are phpmd.xml and phpcs.xml. As for fixers we 
 The project has **PHPCPD**, **PSALM**, and **Larastan** configured as linters. Larastan has also
 a file phpstan.neon containing the rules used, while the other two don't have any configuration file.
 
-__
+
 
 ## Text editors
 

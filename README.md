@@ -1,6 +1,7 @@
 # Preface
 
-This project is Laravel REST API that runs over a Docker container, interactions
+This project is Laravel REST API scaffold built to serve as a quick starting point
+for any Laravel REST API. This scaffold runs over a Docker container. Interactions
 with these containers are interface by a shell script called vessel.
 
 ## Docker
@@ -51,15 +52,15 @@ ___
 
 ## Linters
 
-The project has PHP_CodeSniffer, PHP Mess Detector configured as linters, the files
+The project has **PHP_CodeSniffer**, **PHP Mess Detector** configured as linters, the files
 containing the rules used by them are phpmd.xml and phpcs.xml. As for fixers we have
-PHP CS Fixer configured, and its rules can be found at .php_cs.
+**PHP CS Fixer** configured, and its rules can be found at .php_cs.
 
 
 
-_## Static Analysis
+## Static Analysis
 
-The project has PHPCPD, PSALM, and Larastan configured as linters. Larastan has also
+The project has **PHPCPD**, **PSALM**, and **Larastan** configured as linters. Larastan has also
 a file phpstan.neon containing the rules used, while the other two don't have any configuration file.
 
 __

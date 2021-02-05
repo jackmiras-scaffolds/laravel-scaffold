@@ -2,7 +2,8 @@
 
 namespace App\Helpers;
 
-use App\Exceptions\Custom\ModelUpdatingException;
+use App\Exceptions\ModelUpdatingException;
+use Illuminate\Database\Eloquent\Model;
 
 trait UpdateOrFail
 {
@@ -14,7 +15,7 @@ trait UpdateOrFail
      * @param  array  $attributes
      * @return bool
      *
-     * @throws \App\Exceptions\Custom\ModelUpdatingException
+     * @throws \App\Exceptions\ModelUpdatingException
      */
     public static function updateOrFail(int $id, array $attributes): bool
     {

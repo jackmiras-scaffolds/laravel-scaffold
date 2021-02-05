@@ -2,7 +2,7 @@
 
 namespace App\Helpers;
 
-use App\Exceptions\Custom\ModelDeletionException;
+use App\Exceptions\ModelDeletionException;
 
 trait DeleteOrFail
 {
@@ -13,7 +13,7 @@ trait DeleteOrFail
      * @param  int  $id
      * @return bool
      *
-     * @throws \App\Exceptions\Custom\ModelDeletionException
+     * @throws \App\Exceptions\ModelDeletionException
      */
     public static function deleteOrFail(int $id): bool
     {

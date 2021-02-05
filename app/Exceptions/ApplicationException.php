@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Exceptions\Custom;
+namespace App\Exceptions;
 
 use Exception;
 use App\Exceptions\Error;

@@ -1,9 +1,9 @@
 <?php
 
-namespace Tests\Unit\Exceptions\Custom;
+namespace Tests\Unit\Exceptions;
 
 use Illuminate\Http\Response;
-use App\Exceptions\Custom\ApplicationException;
+use App\Exceptions\ApplicationException;
 
 beforeEach(function () {
     $this->appException = new class extends ApplicationException{

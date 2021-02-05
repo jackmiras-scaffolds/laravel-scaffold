@@ -2,7 +2,7 @@
 
 namespace App\Helpers;
 
-use App\Exceptions\ModelDeletion;
+use App\Exceptions\Custom\ModelDeletionException;
 
 trait DeleteOrFail
 {
@@ -13,14 +13,14 @@ trait DeleteOrFail
      * @param  int  $id
      * @return bool
      *
-     * @throws \App\Exceptions\ModelUpdating
+     * @throws \App\Exceptions\Custom\ModelDeletionException
      */
     public static function deleteOrFail(int $id): bool
     {
         $model = static::findOrFail($id);
 
         if ($model->delete() === false) {
-            throw new ModelDeletion($id, get_class($model));
+            throw new ModelDeletionException($id, get_class($model));
         }
 
         return true;

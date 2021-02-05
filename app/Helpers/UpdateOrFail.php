@@ -2,7 +2,7 @@
 
 namespace App\Helpers;
 
-use App\Exceptions\ModelUpdating;
+use App\Exceptions\Custom\ModelUpdatingException;
 
 trait UpdateOrFail
 {
@@ -14,14 +14,14 @@ trait UpdateOrFail
      * @param  array  $attributes
      * @return bool
      *
-     * @throws \App\Exceptions\ModelUpdating
+     * @throws \App\Exceptions\Custom\ModelUpdatingException
      */
     public static function updateOrFail(int $id, array $attributes): bool
     {
         $model = static::findOrFail($id)->fill($attributes);
 
         if ($model->update() === false) {
-            throw new ModelUpdating($id, get_class($model));
+            throw new ModelUpdatingException($id, get_class($model));
         }
 
         return true;

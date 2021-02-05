@@ -1,10 +1,10 @@
 <?php
 
-namespace Tests\Unit\Exceptions\Custom;
+namespace Tests\Unit\Exceptions;
 
 use Illuminate\Support\Str;
 use Illuminate\Http\Response;
-use App\Exceptions\Custom\ModelDeletionException;
+use App\Exceptions\ModelDeletionException;
 
 beforeEach(function () {
     $this->id = 1;

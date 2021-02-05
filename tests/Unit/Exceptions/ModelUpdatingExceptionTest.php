@@ -1,10 +1,10 @@
 <?php
 
-namespace Tests\Unit\Exceptions\Custom;
+namespace Tests\Unit\Exceptions;
 
 use Illuminate\Support\Str;
 use Illuminate\Http\Response;
-use App\Exceptions\Custom\ModelUpdatingException;
+use App\Exceptions\ModelUpdatingException;
 
 beforeEach(function () {
     $this->id = 1;

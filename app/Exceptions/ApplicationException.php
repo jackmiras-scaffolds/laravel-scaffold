@@ -3,7 +3,6 @@
 namespace App\Exceptions;
 
 use Exception;
-use App\Exceptions\Error;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 

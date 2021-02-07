@@ -2,13 +2,16 @@
 
 namespace App\Models;
 
+use App\Helpers\CamelCaseAttributes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasFactory;
+    use Notifiable;
+    use CamelCaseAttributes;
 
     /**
      * The attributes that are mass assignable.
@@ -19,6 +22,10 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+    ];
+
+    protected $attributes = [
+        'last_name',
     ];
 
     /**

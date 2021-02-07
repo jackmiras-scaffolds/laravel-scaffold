@@ -22,4 +22,8 @@ return [
         'error' => 'This record already exists.',
         'help' => 'Check the informations and try again.',
     ],
+    'attribute_not_exists' => [
+        'error' => 'Attribute not exists on model.',
+        'help' => ':model doesn\'t have attribute :attr',
+    ]
 ];

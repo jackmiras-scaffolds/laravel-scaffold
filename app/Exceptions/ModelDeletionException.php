@@ -13,7 +13,7 @@ class ModelDeletionException extends ApplicationException
     public function __construct(int $id, string $model)
     {
         $this->id = $id;
-        $this->model = $model;
+        $this->model = Str::afterLast($model, '\\');
     }
 
     public function status(): int
@@ -28,9 +28,9 @@ class ModelDeletionException extends ApplicationException
 
     public function error(): string
     {
-        return trans('exception.model_not_deleted.message', [
+        return trans('exception.model_not_deleted.error', [
             'id' => $this->id,
-            'model' => Str::afterLast($this->model, '\\')
+            'model' => $this->model
         ]);
     }
 }

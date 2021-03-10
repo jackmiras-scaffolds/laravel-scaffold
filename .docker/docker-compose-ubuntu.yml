@@ -1,21 +1,20 @@
-version: "3"
 services:
   app:
     build:
       context: .
-      dockerfile: Dockerfile.ubuntu
+      dockerfile: Dockerfile
     container_name: laravel_scaffold
     command: >-
       sh -c "
-        apt-get install php7.4-xdebug && composer install ;\
-        cp xdebug.ini /etc/php/7.4/mods-available/xdebug.ini ;\
+        apt-get update -y && apt-get install php8.0-xdebug -y && composer install ;\
+        cp .docker/xdebug.ini /etc/php/8.0/mods-available/xdebug.ini ;\
         php artisan serve --host 0.0.0.0 --port 80"
     ports:
       - "80:80"
     env_file:
       - .env
     volumes:
-      - xdebug.ini
+      - .docker/xdebug.ini
       - .:/var/www/html:rw
     networks:
       - app_network

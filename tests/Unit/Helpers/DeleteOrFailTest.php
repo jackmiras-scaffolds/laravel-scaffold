@@ -8,7 +8,7 @@ beforeEach(function () {
     $this->userId = 1;
 });
 
-it('expects exception to be throw when update fails', function () {
+it('expects exception to be throw when an update fails', function () {
     $user = Mockery::mock(User::class);
     $user->shouldReceive('fill')->andReturn($user);
     $user->shouldReceive('delete')->andReturn(false);

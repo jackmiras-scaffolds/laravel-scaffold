@@ -6,7 +6,7 @@ beforeEach(function () {
     $this->error = new Error();
 });
 
-it('expects help to be empty when error constructor is empty', function () {
+it('expects help to be empty when the error constructor is empty', function () {
     expect($this->error->help)->toBe('');
 });
 
@@ -26,7 +26,7 @@ it('expects error to be lorem-ipsum when error property is set', function () {
     expect($this->error->error)->toBe('lorem-ipsum');
 });
 
-it('expects error to match struct when json serializing', function () {
+it('expects error to match struct when JSON serializing', function () {
     $keys = array_keys([
         'error' => '',
         'help' => ''

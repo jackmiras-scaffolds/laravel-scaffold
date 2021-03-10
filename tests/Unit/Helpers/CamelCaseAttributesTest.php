@@ -1,14 +1,13 @@
 <?php
 
 use App\Models\User;
-use Illuminate\Support\Str;
 use App\Exceptions\AttributeNotExistsException;
 
 beforeEach(function () {
     $this->user = new User();
 });
 
-it('expects getAttribute to return value when key is CamelCase', function () {
+it('expects getAttribute to return value when the key is CamelCase', function () {
     $this->user->last_name = 'Miras';
 
     $returnment = $this->user->getAttribute('lastName');
@@ -16,7 +15,7 @@ it('expects getAttribute to return value when key is CamelCase', function () {
     expect($returnment)->toBe($this->user->last_name);
 });
 
-it('expects getAttribute to throw exception when key doesn\'t exists', function () {
+it('expects getAttribute to throw an exception when the key not exist', function () {
     $this->user->getAttribute('unexistent_attribute');
 })->throws(AttributeNotExistsException::class);
 

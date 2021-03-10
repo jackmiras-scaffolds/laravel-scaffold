@@ -14,7 +14,7 @@ beforeEach(function () {
     $this->request = Mockery::mock(Request::class);
 });
 
-it('expects status code 404 when validation with errors', function () {
+it('expects status code 404 when validation has errors', function () {
     $validator = Mockery::mock(Validator::class);
     $validator->shouldReceive('errors')->andReturn(collect(['message']));
     $exception = new ValidationException($validator);
@@ -46,7 +46,7 @@ it('expects model not found error message when model not found', function () {
     expect($response->original)->toBe($error->toArray());
 });
 
-it('expects status code 404 when internal server error', function () {
+it('expects status code 404 when an internal server error', function () {
     $exception = new Exception('', Response::HTTP_INTERNAL_SERVER_ERROR);
 
     $response = $this->handler->render($this->request, $exception);
@@ -54,7 +54,7 @@ it('expects status code 404 when internal server error', function () {
     expect($response->status())->toBe(Response::HTTP_BAD_REQUEST);
 });
 
-it('expects server_error error message when internal server error', function () {
+it('expects server_error error message when an internal server error', function () {
     $exception = new Exception('', Response::HTTP_INTERNAL_SERVER_ERROR);
     $error = new Error('Exception', 'server_error');
 
@@ -63,10 +63,10 @@ it('expects server_error error message when internal server error', function () 
     expect($response->original)->toBe($error->toArray());
 });
 
-it('expects response class when non exception can be handled', function () {
+it('expects response class when non-exception can be handled', function () {
     $this->request->shouldReceive('expectsJson')->andReturn(false);
 
-    $response = $this->handler->render($this->request, new Exception);
+    $response = $this->handler->render($this->request, new Exception());
 
     expect($response)->toBeInstanceOf(Response::class);
 });

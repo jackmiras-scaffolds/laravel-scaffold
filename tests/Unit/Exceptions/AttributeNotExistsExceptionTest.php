@@ -18,7 +18,7 @@ it('expects render to return a response instance when invoked', function () {
     expect($response)->toBeInstanceOf(Response::class);
 });
 
-it('expects status code 400 when expection is thrown', function () {
+it('expects status code 400 when an exception is thrown', function () {
     $status = $this->exception->status();
 
     expect($status)->toBe(Response::HTTP_BAD_REQUEST);

@@ -18,19 +18,19 @@ it('expects render to return a response instance when invoked', function () {
     expect($response)->toBeInstanceOf(Response::class);
 });
 
-it('expects status code 400 when expection is thrown', function () {
+it('expects status code 400 when an exception is thrown', function () {
     $status = $this->exception->status();
 
     expect($status)->toBe(Response::HTTP_BAD_REQUEST);
 });
 
-it('expects help to be anonymous help when expection is thrown', function () {
+it('expects help to be anonymous help when an exception is thrown', function () {
     $help = $this->exception->help();
 
     expect($help)->toBe(trans('exception.model_not_deleted.help'));
 });
 
-it('expects error to be anonymous error when expection is thrown', function () {
+it('expects error to be an anonymous error when an exception is thrown', function () {
     $error = $this->exception->error();
     $replace = ['id' => $this->id, 'model' => Str::afterLast($this->model, '\\')];
 

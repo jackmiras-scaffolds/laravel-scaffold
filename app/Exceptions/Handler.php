@@ -22,7 +22,7 @@ class Handler extends ExceptionHandler
     /**
      * A list of the inputs that are never flashed for validation exceptions.
      *
-     * @var array
+     * @var string[]
      */
     protected $dontFlash = [
         'password',
@@ -49,8 +49,10 @@ class Handler extends ExceptionHandler
         }
 
         if ($e instanceof ModelNotFoundException) {
+            $ids = $e->getIds();
+
             $replacement = [
-                'id' => Arr::first($e->getIds()),
+                'id' => is_int($ids) ? $ids : Arr::first($ids),
                 'model' => Arr::last(explode('\\', $e->getModel())),
             ];
 

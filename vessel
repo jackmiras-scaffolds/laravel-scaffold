@@ -45,11 +45,11 @@ function helper_commands() {
 
   if [[ "$1" == "phpunit" ]]; then
     # Run an phpunit command inside the app container.
-    docker-compose exec -T $DOCKER_SERVICE_NAME sh -c "cd ${WORKDIR} && ./vendor/bin/$*"
+    docker-compose exec -T $DOCKER_SERVICE_NAME sh -c "cd ${WORKDIR} && ./vendor/bin/$* --colors=always"
   fi
 
   if [[ "$1" == "pest" ]]; then
-    # Run an phpunit command inside the app container.
+    # Run an pest command inside the app container.
     docker-compose exec -T $DOCKER_SERVICE_NAME sh -c "cd ${WORKDIR} && ./vendor/bin/$*"
   fi
 

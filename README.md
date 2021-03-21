@@ -39,7 +39,7 @@ of Xdebug possible. If you choose to start the container by running
 | ./vessel down                  | Stop docker-compose stack                            |
 | ./vessel bash                  | Access bash of the app container                     |
 | ./vessel clean-all             | Prune all possible containers, volumes, and networks |
-| ./vessel artisan <ANY_COMMAND> | Run any Laravel artisan command                       |
+| ./vessel artisan <ANY_COMMAND> | Run any Laravel artisan command                      |
 | ./vessel tinker                | Open a REPL for the Laravel framework                |
 | ./vessel composer              | Run any composer command                             |
 | ./vessel pest                  | Run test swite using Pest framework                  |

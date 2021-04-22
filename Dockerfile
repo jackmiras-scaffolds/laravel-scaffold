@@ -56,8 +56,7 @@ RUN echo "daemon off;" >> /etc/nginx/nginx.conf \
 
 # Configure logs
 RUN ln -sf /dev/stdout /var/log/nginx/access.log \
-    && ln -sf /dev/stderr /var/log/nginx/error.log \
-    && ln -sf /dev/stdout /var/www/html/storage/laravel.log
+    && ln -sf /dev/stderr /var/log/nginx/error.log
 
 # Configure supervisor
 RUN mkdir -p /etc/supervisor.d/
@@ -66,6 +65,9 @@ COPY .docker/supervisord.ini /etc/supervisor.d/supervisord.ini
 # Building process
 COPY . .
 RUN composer install --no-dev
+
+# Configure Laravel logs
+RUN ln -sf /dev/stdout /var/www/html/storage/laravel.log
 
 EXPOSE 80
 CMD ["supervisord", "-c", "/etc/supervisor.d/supervisord.ini"]

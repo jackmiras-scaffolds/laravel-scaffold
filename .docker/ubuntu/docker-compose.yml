@@ -1,4 +1,3 @@
-version: "3"
 services:
   app:
     build:
@@ -9,6 +8,7 @@ services:
       sh -c "
         apt-get update -y && apt-get install php8.0-xdebug -y && composer install ;\
         cp .docker/xdebug.ini /etc/php/8.0/mods-available/xdebug.ini ;\
+        cp .docker/php.ini-development /etc/php8/php.ini ;\
         php artisan serve --host 0.0.0.0 --port 80"
     ports:
       - "80:80"

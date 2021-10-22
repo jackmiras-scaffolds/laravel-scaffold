@@ -6,6 +6,7 @@ services:
     command: >-
       sh -c "
         apk add php8-pecl-xdebug && composer install ;\
+        cp .docker/php.ini-development /etc/php8/php.ini ;\
         cp .docker/xdebug.ini /etc/php8/conf.d/50_xdebug.ini ;\
         php artisan serve --host 0.0.0.0 --port 80"
     ports:
@@ -13,7 +14,6 @@ services:
     env_file:
       - .env
     volumes:
-      - .docker/xdebug.ini
       - .:/var/www/html:rw
     networks:
       - app_network
@@ -40,7 +40,7 @@ services:
     ports:
       - "6379:6379"
     volumes:
-     - cache_data:/data
+      - cache_data:/data
     networks:
       - app_network
 

@@ -1,4 +1,4 @@
-FROM debian:buster-slim
+FROM ubuntu:20.04
 
 WORKDIR /var/www/html/
 
@@ -13,22 +13,18 @@ RUN apt-get update \
     && locale-gen en_US.UTF-8
 
 # Essentials
-RUN apt-get update -y && apt-get install -y lsb-release \
-    apt-transport-https \
-    ca-certificates \
-    zip \
-    wget \
+RUN apt-get install -y zip \
     curl \
     unzip \
     nginx \
     sqlite3 \
-    supervisor
+    supervisor \
+    software-properties-common
 
 # Instaling PHP
-RUN wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
-RUN echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" | tee /etc/apt/sources.list.d/php.list
+RUN add-apt-repository -y ppa:ondrej/php && apt-get update -y
 
-RUN apt-get update -y && apt-get install -y php8.0-common \
+RUN apt-get install -y php8.0-common \
     php8.0-fpm \
     php8.0-pdo \
     php8.0-mbstring \
@@ -41,6 +37,7 @@ RUN apt-get update -y && apt-get install -y php8.0-common \
     php8.0-readline \
     php8.0-gd \
     php8.0-imap \
+    php8.0-xdebug \
     php-igbinary \
     php-mongodb \
     php-redis \
@@ -53,26 +50,22 @@ RUN curl -sS https://getcomposer.org/installer -o composer-setup.php \
 
 # Configure php-fpm
 COPY .docker/php-fpm.conf /etc/php/8.0/fpm/php-fpm.conf
-COPY .docker/fastcgi-php.conf /etc/nginx/fastcgi-php.conf
-
-RUN mkdir -p /run/php/ \
-    && touch /run/php/php8.0-fpm.pid \
-    && touch /run/php/php8.0-fpm.sock
+COPY .docker/php.ini-production /etc/php/8.0/fpm/php.ini
+RUN mkdir -p /run/php/ && touch /run/php/php8.0-fpm.pid
 
 # Configure nginx
-COPY .docker/default.conf /etc/nginx/conf.d/default.conf
+COPY .docker/nginx.conf /etc/nginx/
+COPY .docker/nginx-laravel.conf /etc/nginx/modules/
 
-RUN echo "daemon off;" >> /etc/nginx/nginx.conf \
-    && mkdir -p /run/nginx/ && touch /run/nginx/nginx.pid
+RUN mkdir -p /run/nginx/ && touch /run/nginx/nginx.pid
 
 # Configure logs
 RUN ln -sf /dev/stdout /var/log/nginx/access.log \
-    && ln -sf /dev/stderr /var/log/nginx/error.log \
-    && ln -sf /dev/stdout /var/www/html/storage/laravel.log
+    && ln -sf /dev/stderr /var/log/nginx/error.log
 
 # Configure supervisor
 RUN mkdir -p /etc/supervisor.d/
-COPY .docker/supervisord.ini /etc/supervisor/conf.d/supervisord.ini
+COPY .docker/supervisord.ini /etc/supervisor.d/supervisord.ini
 
 # Cleaning up image
 RUN apt-get remove -y --purge software-properties-common \
@@ -83,6 +76,10 @@ RUN apt-get remove -y --purge software-properties-common \
 # Building process
 COPY . .
 RUN composer install --no-dev
+RUN chown -R www-data:www-data /var/www/html/storage
+
+# Setting up permissions for Laravel storage
+RUN chown -R www-data /var/www/html/storage
 
 EXPOSE 80
 CMD ["supervisord", "-c", "/etc/supervisor.d/supervisord.ini"]

@@ -20,7 +20,7 @@ vendor
 **.gitignore
 **.gitattributes
 **.sass-cache
-*.env*
+.env.example
 .editorconfig
 
 *.config.js

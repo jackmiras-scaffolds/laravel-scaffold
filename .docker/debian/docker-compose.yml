@@ -1,15 +1,18 @@
 version: "3"
 services:
   app:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: laravel_scaffold
     command: >-
       sh -c "
-        apk add php7-pecl-xdebug && composer install ;\
-        cp .docker/xdebug.ini /etc/php7/conf.d/50_xdebug.ini ;\
+        apt-get update -y && apt-get install php8.0-xdebug -y && composer install ;\
+        cp .docker/xdebug.ini /etc/php/8.0/mods-available/xdebug.ini ;\
+        cp .docker/php.ini-development /etc/php8/php.ini ;\
         php artisan serve --host 0.0.0.0 --port 80"
     ports:
-      - "8000:80"
+      - "80:80"
     env_file:
       - .env
     volumes:

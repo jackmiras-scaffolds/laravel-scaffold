@@ -33,7 +33,7 @@
         "phpunit/phpunit": "^9.5.10",
         "psalm/plugin-laravel": "^1.4",
         "sebastian/phpcpd": "^6.0",
-        "squizlabs/php_codesniffer": "^3.5",
+        "squizlabs/php_codesniffer": "^3.6",
         "vimeo/psalm": "^4.6"
     },
     "config": {

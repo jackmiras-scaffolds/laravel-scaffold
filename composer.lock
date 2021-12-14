@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "13a735e584ab2d593583139f5c5fde6e",
+    "content-hash": "03121ab7f908e1c44da6e15ba2691929",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -8065,16 +8065,16 @@
         },
         {
             "name": "nunomaduro/larastan",
-            "version": "v0.6.13",
+            "version": "1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nunomaduro/larastan.git",
-                "reference": "7a047f7974e6e16d04ee038d86e2c5e6c59e9dfe"
+                "reference": "3e0beabe8cf98373700f4d30cdfb2aa6badb9144"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nunomaduro/larastan/zipball/7a047f7974e6e16d04ee038d86e2c5e6c59e9dfe",
-                "reference": "7a047f7974e6e16d04ee038d86e2c5e6c59e9dfe",
+                "url": "https://api.github.com/repos/nunomaduro/larastan/zipball/3e0beabe8cf98373700f4d30cdfb2aa6badb9144",
+                "reference": "3e0beabe8cf98373700f4d30cdfb2aa6badb9144",
                 "shasum": ""
             },
             "require": {
@@ -8089,20 +8089,21 @@
                 "illuminate/support": "^6.0 || ^7.0 || ^8.0 || ^9.0",
                 "mockery/mockery": "^0.9 || ^1.0",
                 "php": "^7.2 || ^8.0",
-                "phpstan/phpstan": "^0.12.65",
-                "symfony/process": "^4.3 || ^5.0"
+                "phpstan/phpstan": "^1.0",
+                "symfony/process": "^4.3 || ^5.0 || ^6.0"
             },
             "require-dev": {
+                "nikic/php-parser": "^4.13.0",
                 "orchestra/testbench": "^4.0 || ^5.0 || ^6.0 || ^7.0",
                 "phpunit/phpunit": "^7.3 || ^8.2 || ^9.3"
             },
             "suggest": {
-                "orchestra/testbench": "^4.0 || ^5.0"
+                "orchestra/testbench": "Using Larastan for analysing a package needs Testbench"
             },
             "type": "phpstan-extension",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.6-dev"
+                    "dev-master": "1.0-dev"
                 },
                 "phpstan": {
                     "includes": [
@@ -8138,11 +8139,11 @@
             ],
             "support": {
                 "issues": "https://github.com/nunomaduro/larastan/issues",
-                "source": "https://github.com/nunomaduro/larastan/tree/v0.6.13"
+                "source": "https://github.com/nunomaduro/larastan/tree/1.0.2"
             },
             "funding": [
                 {
-                    "url": "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=66BYDWAT92N6L",
+                    "url": "https://www.paypal.com/paypalme/enunomaduro",
                     "type": "custom"
                 },
                 {
@@ -8158,7 +8159,7 @@
                     "type": "patreon"
                 }
             ],
-            "time": "2021-01-22T12:51:26+00:00"
+            "time": "2021-11-23T10:50:03+00:00"
         },
         {
             "name": "openlss/lib-array2xml",
@@ -9151,16 +9152,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "0.12.99",
+            "version": "1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "b4d40f1d759942f523be267a1bab6884f46ca3f7"
+                "reference": "cbe085f9fdead5b6d62e4c022ca52dc9427a10ee"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/b4d40f1d759942f523be267a1bab6884f46ca3f7",
-                "reference": "b4d40f1d759942f523be267a1bab6884f46ca3f7",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/cbe085f9fdead5b6d62e4c022ca52dc9427a10ee",
+                "reference": "cbe085f9fdead5b6d62e4c022ca52dc9427a10ee",
                 "shasum": ""
             },
             "require": {
@@ -9176,7 +9177,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.12-dev"
+                    "dev-master": "1.2-dev"
                 }
             },
             "autoload": {
@@ -9191,7 +9192,7 @@
             "description": "PHPStan - PHP Static Analysis Tool",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan/issues",
-                "source": "https://github.com/phpstan/phpstan/tree/0.12.99"
+                "source": "https://github.com/phpstan/phpstan/tree/1.2.0"
             },
             "funding": [
                 {
@@ -9211,7 +9212,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-09-12T20:09:55+00:00"
+            "time": "2021-11-18T14:09:01+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",

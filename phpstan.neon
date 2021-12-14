@@ -11,6 +11,12 @@ parameters:
 
     ignoreErrors:
         - '#Unsafe usage of new static#'
+        -
+            message: '#Undefined variable: \$this.*#'
+            path: ./tests
+        -
+            message: '#Call to an undefined method#'
+            path: ./tests
 
     excludePaths:
         - ./*/*/FileToBeExcluded.php

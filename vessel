@@ -8,81 +8,84 @@ readonly DOCKER_SERVICE_NAME="app"
 # Container name for app service at docker-compose.yml
 readonly DOCKER_SERVICE_CONTAINER_NAME="laravel_scaffold"
 
-function configure_xdebug() {
+configure_xdebug() {
   cp .docker/xdebug-base.ini .docker/xdebug.ini
 
-  if [[ "$(uname -s)" == "Linux" ]]; then
-    if [[ "$(</proc/version)" == *@(microsoft)* ]]; then
+  if [ "$(uname -s)" = "Linux" ]; then
+    if [[ "$(</proc/version)" = *@(microsoft)* ]]; then
       # If it's running in WSL
-      readonly XDEBUG_HOST=$(grep nameserver /etc/resolv.conf | cut -d ' ' -f2)
+      XDEBUG_HOST=$(grep nameserver /etc/resolv.conf | cut -d ' ' -f2)
+      readonly XDEBUG_HOST
     else
       # If it's running in Linux
-      readonly XDEBUG_HOST=$(hostname -I | cut -d ' ' -f1)
+      XDEBUG_HOST=$(hostname -I | cut -d ' ' -f1)
+      readonly XDEBUG_HOST
     fi
-  elif [[ "$(uname -s)" == "Darwin" ]]; then
+  elif [ "$(uname -s)" = "Darwin" ]; then
     # If it's running in macOS
-    readonly XDEBUG_HOST=$(ipconfig getifaddr en1)
+    XDEBUG_HOST=$(ipconfig getifaddr en1)
+    readonly XDEBUG_HOST
   fi
 
-  # Adding your current IP to 'xdebug.remote_host=' at xdebug.ini
-  sed -i "s/xdebug\.client_host\=.*/xdebug\.client_host\=$XDEBUG_HOST/g" .docker/xdebug.ini
+  # Adding your current IP to 'xdebug.client_host=' at xdebug.ini
+  sed -i "s/xdebug\.client_host\=.*/xdebug\.client_host\=${XDEBUG_HOST}/g" .docker/xdebug.ini
 }
 
-function helper_commands() {
-  if [[ "$1" == "artisan" ]]; then
+helper_commands() {
+  if [ "$1" = "artisan" ]; then
     # Run an artisan command inside the app container.
-    docker-compose exec -T $DOCKER_SERVICE_NAME sh -c "cd ${WORKDIR} && php $*"
+    docker-compose exec -T "${DOCKER_SERVICE_NAME}" sh -c "cd ${WORKDIR} && php $*"
 
     # Adjusting permissions in case a files are created
-    docker-compose exec -T $DOCKER_SERVICE_NAME sh -c "chown 1000:1000 -R app"
-    docker-compose exec -T $DOCKER_SERVICE_NAME sh -c "chown 1000:1000 -R resources"
+    docker-compose exec -T "${DOCKER_SERVICE_NAME}" sh -c "chown 1000:1000 -R app"
+    docker-compose exec -T "${DOCKER_SERVICE_NAME}" sh -c "chown 1000:1000 -R resources"
   fi
 
-  if [[ "$1" == "tinker" ]]; then
+  if [ "$1" = "tinker" ]; then
     # Opening tinker (Laravel's REPL) inside the app container.
-    docker-compose exec $DOCKER_SERVICE_NAME sh -c "cd ${WORKDIR} && php artisan tinker"
+    docker-compose exec "${DOCKER_SERVICE_NAME}" sh -c "cd ${WORKDIR} && php artisan tinker"
   fi
 
-  if [[ "$1" == "phpunit" ]]; then
+  if [ "$1" = "phpunit" ]; then
     # Run an phpunit command inside the app container.
-    docker-compose exec -T $DOCKER_SERVICE_NAME sh -c "cd ${WORKDIR} && ./vendor/bin/$* --colors=always"
+    docker-compose exec -T "${DOCKER_SERVICE_NAME}" sh -c "cd ${WORKDIR} && ./vendor/bin/$* --colors=always"
   fi
 
-  if [[ "$1" == "pest" ]]; then
+  if [ "$1" = "pest" ]; then
     # Run an pest command inside the app container.
-    docker-compose exec -T $DOCKER_SERVICE_NAME sh -c "cd ${WORKDIR} && ./vendor/bin/$*"
+    docker-compose exec -T "${DOCKER_SERVICE_NAME}" sh -c "cd ${WORKDIR} && ./vendor/bin/$*"
   fi
 
-  if [[ "$1" == "composer" ]]; then
+  if [ "$1" = "composer" ]; then
     # Run an composer command inside the app container.
-    docker-compose exec -T $DOCKER_SERVICE_NAME sh -c "cd ${WORKDIR} && $*"
+    docker-compose exec -T "${DOCKER_SERVICE_NAME}" sh -c "cd ${WORKDIR} && $*"
   fi
 }
 
-function docker_commands() {
-  if [[ "$1" == "up" ]]; then
+docker_commands() {
+  if [ "$1" = "up" ]; then
     docker-compose up
   fi
 
-  if [[ "$1" == "down" ]]; then
+  if [ "$1" = "down" ]; then
     docker-compose down --remove-orphans
   fi
 
-  if [[ "$1" == "bash" ]]; then
-    docker exec -it $DOCKER_SERVICE_CONTAINER_NAME /bin/bash
+  if [ "$1" = "bash" ]; then
+    docker exec -it "${DOCKER_SERVICE_CONTAINER_NAME}" /bin/bash
   fi
 
-  if [[ "$1" == "docker" ]]; then
+  if [ "$1" = "docker" ]; then
     # Run Docker command through this script.
     "$@"
   fi
 
-  if [[ "$1" == "clean-all" ]]; then
+  if [ "$1" = "clean-all" ]; then
     printf "INFO: Destroying docker-compose resources \n"
     docker-compose down --remove-orphans
 
     printf "\nINFO: Killing any remaining containers \n"
-    docker kill "$(docker ps -a | grep -i ${DOCKER_SERVICE_CONTAINER_NAME} | awk '{print $1}')" || echo ""
+    docker kill "$(docker ps -a | grep -i "${DOCKER_SERVICE_CONTAINER_NAME}" | awk '{print $1}')" || echo ""
 
     printf "\nINFO: Removing image \n"
     docker image rm -f "$(docker images | grep -i "$(basename "$(pwd)")" | awk '{print $1}')"
@@ -94,41 +97,41 @@ function docker_commands() {
     done
 
     printf "\nINFO: Listing running containers \n"
-    docker ps -a | grep -i ${DOCKER_SERVICE_CONTAINER_NAME} || echo ""
+    docker ps -a | grep -i "${DOCKER_SERVICE_CONTAINER_NAME}" || echo ""
 
     printf "INFO: Listing existing volumes \n"
     docker volume ls | grep -i "$(basename "$(pwd)")"
   fi
 
-  if [[ "$1" == "docker-compose" ]]; then
+  if [ "$1" = "docker-compose" ]; then
     # Run docker-compose command through this script.
     "$@"
   fi
 }
 
-function continuous_integration() {
-  if [[ "$1" == "tests" ]]; then
-    docker-compose exec -T $DOCKER_SERVICE_NAME sh -c ".gitlab-ci/scripts/tests.sh"
+continuous_integration() {
+  if [ "$1" = "tests" ]; then
+    docker-compose exec -T "${DOCKER_SERVICE_NAME}" sh -c "bin/tests.sh"
   fi
 
-  if [[ "$1" == "linters" ]]; then
-    docker-compose exec -T $DOCKER_SERVICE_NAME sh -c ".gitlab-ci/scripts/linters.sh"
+  if [ "$1" = "linters" ]; then
+    docker-compose exec -T "${DOCKER_SERVICE_NAME}" sh -c "bin/linters.sh"
   fi
 
-  if [[ "$1" == "fix-linters" ]]; then
-    docker-compose exec -T $DOCKER_SERVICE_NAME sh -c ".gitlab-ci/scripts/fix-linters.sh"
+  if [ "$1" = "fix-linters" ]; then
+    docker-compose exec -T "${DOCKER_SERVICE_NAME}" sh -c "bin/fix-linters.sh"
   fi
 
-  if [[ "$1" == "static-analysis" ]]; then
-    docker-compose exec -T $DOCKER_SERVICE_NAME sh -c ".gitlab-ci/scripts/static-analysis.sh"
+  if [ "$1" = "static-analysis" ]; then
+    docker-compose exec -T "${DOCKER_SERVICE_NAME}" sh -c "bin/static-analysis.sh"
   fi
 
-  if [[ "$1" == "update-dependencies" ]]; then
-    docker-compose exec -T $DOCKER_SERVICE_NAME sh -c "cd ${WORKDIR} && composer install"
+  if [ "$1" = "update-dependencies" ]; then
+    docker-compose exec -T "${DOCKER_SERVICE_NAME}" sh -c "cd ${WORKDIR} && composer install"
   fi
 }
 
-function main() {
+main() {
   configure_xdebug
 
   helper_commands "$@"

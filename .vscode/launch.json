@@ -11,13 +11,13 @@
             }
         },
         {
-            "name": "Listen for XDebug",
+            "name": "Listen for XDebug on localhost",
             "type": "php",
             "request": "launch",
             "port": 9003
         },
         {
-            "name": "Launch currently open script",
+            "name": "Launch currently open script on localhost",
             "type": "php",
             "request": "launch",
             "program": "${file}",

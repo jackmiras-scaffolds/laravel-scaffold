@@ -36,13 +36,13 @@ it('expects status code 400 when an exception is thrown', function () {
     expect($status)->toBe(Response::HTTP_BAD_REQUEST);
 });
 
-it('expects help to be an anonymous help when an exception is thrown', function () {
+it('expects help to be anonymous when an exception is thrown', function () {
     $help = $this->appException->help();
 
     expect($help)->toBe('Anonymous help');
 });
 
-it('expects error to be an anonymous error when an exception is thrown', function () {
+it('expects error to be anonymous when an exception is thrown', function () {
     $error = $this->appException->error();
 
     expect($error)->toBe('Anonymous error');

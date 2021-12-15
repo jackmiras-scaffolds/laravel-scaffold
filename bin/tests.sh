@@ -6,4 +6,4 @@ echo "##########################################################################
 echo "# Running tests with coverage                                                  #"
 echo "################################################################################"
 
-./vendor/bin/pest --coverage --min=15
+./vendor/bin/pest --ci --coverage --min=15

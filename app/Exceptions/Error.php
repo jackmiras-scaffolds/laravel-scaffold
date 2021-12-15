@@ -17,9 +17,11 @@ class Error implements Arrayable, Jsonable, JsonSerializable
         $this->error = $error;
     }
 
-    public function toJson($options = 0)
+    public function toJson($options = 0): string
     {
-        return json_encode($this->jsonSerialize(), $options);
+        $jsonEncoded = json_encode($this->jsonSerialize(), $options);
+        throw_unless($jsonEncoded, JsonEncodeException::class);
+        return $jsonEncoded;
     }
 
     public function jsonSerialize(): array

@@ -7,7 +7,7 @@ echo "# PHP CS Fixer                                                            
 echo "################################################################################"
 
 ./vendor/bin/php-cs-fixer \
-    --config=.php_cs \
+  --config=.php-cs-fixer.php \
     --using-cache=no \
     --stop-on-violation \
     fix app routes config database database

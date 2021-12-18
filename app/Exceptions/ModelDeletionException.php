@@ -30,7 +30,7 @@ class ModelDeletionException extends ApplicationException
     {
         return trans('exception.model_not_deleted.error', [
             'id' => $this->id,
-            'model' => $this->model
+            'model' => $this->model,
         ]);
     }
 }

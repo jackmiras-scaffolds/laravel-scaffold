@@ -37,9 +37,10 @@ it('expects model not found error message when model not found', function () {
     $exception = new ModelNotFoundException();
     $exception->setModel(User::class, [1]);
 
-    $error = resolve(Error::class);
-    $error->help = trans('exception.model_not_found.help');
-    $error->error = trans('exception.model_not_found.error', ['id' => 1, 'model' => 'User']);
+    $error = new Error(
+        trans('exception.model_not_found.help'),
+        trans('exception.model_not_found.error', ['id' => 1, 'model' => 'User'])
+    );
 
     $response = $this->handler->render($this->request, $exception);
 

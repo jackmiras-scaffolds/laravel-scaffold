@@ -19,10 +19,7 @@ abstract class ApplicationException extends Exception
     */
     public function render(Request $request): Response
     {
-        $error = new Error();
-        $error->help = $this->help();
-        $error->error = $this->error();
-
+        $error = new Error($this->help(), $this->error());
         return response($error->toArray(), $this->status());
     }
 }

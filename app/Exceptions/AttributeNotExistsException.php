@@ -30,7 +30,7 @@ class AttributeNotExistsException extends ApplicationException
     {
         return trans('exception.attribute_not_exists.error', [
             'attr' => $this->attr,
-            'model' => $this->model
+            'model' => $this->model,
         ]);
     }
 }

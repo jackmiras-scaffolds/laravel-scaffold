@@ -15,6 +15,7 @@ echo "##########################################################################
 echo "" && ./vendor/bin/psalm \
     --no-cache \
     --no-file-cache \
+    --php-version=8.0 \
     --no-reflection-cache \
     --show-info=true && echo ""
 

@@ -14,7 +14,7 @@ class Handler extends ExceptionHandler
     /**
      * A list of the exception types that are not reported.
      *
-     * @var array
+     * @var string[]
      */
     protected $dontReport = [
     ];
@@ -25,9 +25,22 @@ class Handler extends ExceptionHandler
      * @var string[]
      */
     protected $dontFlash = [
+        'current_password',
         'password',
         'password_confirmation',
     ];
+
+    /**
+     * Register the exception handling callbacks for the application.
+     *
+     * @return void
+     */
+    // public function register()
+    // {
+    //     $this->reportable(function (Throwable $e) {
+    //         //
+    //     });
+    // }
 
     /**
      * Render an exception into an HTTP response.
@@ -40,34 +53,32 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $e)
     {
+        //TODO: Check if this function can be replaced by the register(...) function [Fri Dec 17 09:56:55 2021]
         if ($e instanceof ValidationException) {
-            $error = resolve(Error::class);
-            $error->help = $e->validator->errors()->first();
-            $error->error = trans('exception.data_validation');
+            $error = new Error(
+                help: $e->validator->errors()->first(),
+                error: trans('exception.data_validation')
+            );
 
             return response($error->toArray(), Response::HTTP_BAD_REQUEST);
         }
 
         if ($e instanceof ModelNotFoundException) {
-            $ids = $e->getIds();
-
             $replacement = [
-                'id' => is_int($ids) ? $ids : Arr::first($ids),
+                'id' => collect($e->getIds())->first(),
                 'model' => Arr::last(explode('\\', $e->getModel())),
             ];
 
-            $error = resolve(Error::class);
-            $error->help = trans('exception.model_not_found.help');
-            $error->error = trans('exception.model_not_found.error', $replacement);
+            $error = new Error(
+                help: trans('exception.model_not_found.help'),
+                error: trans('exception.model_not_found.error', $replacement)
+            );
 
             return response($error->toArray(), Response::HTTP_NOT_FOUND);
         }
 
         if ($e->getCode() === Response::HTTP_INTERNAL_SERVER_ERROR) {
-            $error = resolve(Error::class);
-            $error->error = 'server_error';
-            $error->help = $e->getMessage() ?: get_class($e);
-
+            $error = new Error($e->getMessage() ?: get_class($e), 'server_error');
             return response($error->toArray(), Response::HTTP_BAD_REQUEST);
         }
 

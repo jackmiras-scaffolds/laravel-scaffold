@@ -55,8 +55,8 @@ if (!function_exists('fromSecretsManager')) {
 
         try {
             $result = $client->getSecretValue(['SecretId' => $secretName]);
-            $secretString = $result['SecretString'];
-            $secretBinary = $result['SecretBinary'];
+            $secretString = (string) $result['SecretString'];
+            $secretBinary = (string) $result['SecretBinary'];
         } catch (CredentialsException $e) {
             return '';
         } catch (AwsException $e) {
@@ -67,14 +67,14 @@ if (!function_exists('fromSecretsManager')) {
         }
 
         if (empty($secretString) === false) {
-            $secrets = json_decode($secretString, true);
-            return $secrets[$key];
+            $secrets = (array) json_decode($secretString, true);
+            return (string) $secrets[$key];
         }
 
         if (empty($secretBinary) === false) {
             $binaryDecoded = base64_decode($secretBinary);
-            $secrets = json_decode($binaryDecoded, true);
-            return $secrets[$key];
+            $secrets = (array) json_decode($binaryDecoded, true);
+            return (string) $secrets[$key];
         }
 
         return '';

@@ -6,7 +6,6 @@ use Illuminate\Http\Response;
 
 class JsonEncodeException extends ApplicationException
 {
-
     public function status(): int
     {
         return Response::HTTP_BAD_REQUEST;

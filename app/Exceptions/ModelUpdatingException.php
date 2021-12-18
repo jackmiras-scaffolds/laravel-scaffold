@@ -30,7 +30,7 @@ class ModelUpdatingException extends ApplicationException
     {
         return trans('exception.model_not_updated.error', [
             'id' => $this->id,
-            'model' => $this->model
+            'model' => $this->model,
         ]);
     }
 }

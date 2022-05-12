@@ -23,14 +23,14 @@ class AttributeNotExistsException extends ApplicationException
 
     public function help(): string
     {
-        return trans('exception.attribute_not_exists.help');
+        return trans('exception.attribute_not_exists.help', [
+            'attr' => $this->attr,
+            'model' => $this->model,
+        ]);
     }
 
     public function error(): string
     {
-        return trans('exception.attribute_not_exists.error', [
-            'attr' => $this->attr,
-            'model' => $this->model,
-        ]);
+        return trans('exception.attribute_not_exists.error');
     }
 }

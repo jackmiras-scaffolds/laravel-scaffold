@@ -2,29 +2,39 @@
 
 namespace App\Helpers;
 
-use App\Exceptions\ModelUpdatingException;
 use Illuminate\Database\Eloquent\Model;
+use App\Exceptions\ModelUpdatingException;
 
 trait UpdateOrFail
 {
+    /**
+     * Instantiate a new model instance from the model implementing this trait.
+     *
+     * @return Model
+     */
+    private static function model(): Model
+    {
+        return new (get_class());
+    }
+
     /**
      * Find a model by id, fill the model with an array of attributes, update
      * the model into the database, otherwise it throws an exception.
      *
      * @param  int  $id
      * @param  array  $attributes
-     * @return bool
+     * @return Model
      *
      * @throws \App\Exceptions\ModelUpdatingException
      */
-    public static function updateOrFail(int $id, array $attributes): bool
+    public static function updateOrFail(int $id, array $attributes): Model
     {
-        $model = static::findOrFail($id)->fill($attributes);
+        $model = self::model()->findOrFail($id)->fill($attributes);
 
         if ($model->update() === false) {
-            throw new ModelUpdatingException($id, get_class($model));
+            throw new ModelUpdatingException($id, get_class());
         }
 
-        return true;
+        return $model;
     }
 }

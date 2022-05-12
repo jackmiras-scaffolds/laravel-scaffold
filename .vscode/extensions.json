@@ -2,7 +2,7 @@
     "recommendations": [
         "calebporzio.better-phpunit",
         "junstyle.php-cs-fixer",
-        "felixfbecker.php-debug",
+        "xdebug.php-debug",
         "bmewburn.vscode-intelephense-client",
         "ecodes.vscode-phpmd",
         "mehedidracula.php-namespace-resolver",

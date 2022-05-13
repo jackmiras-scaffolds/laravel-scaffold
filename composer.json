@@ -2,37 +2,39 @@
     "name": "laravel/laravel",
     "type": "project",
     "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
+    "keywords": [
+        "framework",
+        "laravel"
+    ],
     "license": "MIT",
     "require": {
-        "php": "^8.0",
-        "aws/aws-sdk-php": "^3.208",
+        "php": "^8.0.2",
+        "aws/aws-sdk-php": "^3.222",
         "fruitcake/laravel-cors": "^2.0",
-        "guzzlehttp/guzzle": "^7.0.1",
-        "laravel/framework": "^8.65",
-        "laravel/sanctum": "^2.11",
-        "laravel/tinker": "^2.5",
-        "ext-json": "*"
+        "guzzlehttp/guzzle": "^7.2",
+        "laravel/framework": "^9.11",
+        "laravel/sanctum": "^2.14.1",
+        "laravel/tinker": "^2.7"
     },
     "require-dev": {
-        "brainmaestro/composer-git-hooks": "^2.8",
-        "facade/ignition": "^2.5",
         "fakerphp/faker": "^1.9.1",
-        "friendsofphp/php-cs-fixer": "^3.4",
+        "friendsofphp/php-cs-fixer": "^3.8",
         "laravel/sail": "^1.0.1",
         "mockery/mockery": "^1.4.4",
-        "nunomaduro/collision": "^5.10",
-        "nunomaduro/larastan": "^1.0",
+        "nunomaduro/collision": "^6.1",
+        "nunomaduro/larastan": "^2.1",
         "pdepend/pdepend": "^2.10",
         "pestphp/pest": "^1.21",
-        "pestphp/pest-plugin-laravel": "^1.1",
-        "phpmd/phpmd": "^2.11",
-        "phpstan/phpstan": "^1.2",
+        "pestphp/pest-plugin-laravel": "^1.2",
+        "phpmd/phpmd": "^2.12",
+        "phpro/grumphp": "^1.11",
+        "phpstan/phpstan": "^1.6",
         "phpunit/phpunit": "^9.5.10",
-        "psalm/plugin-laravel": "^1.5",
+        "psalm/plugin-laravel": "^2.0",
         "sebastian/phpcpd": "^6.0",
+        "spatie/laravel-ignition": "^1.0",
         "squizlabs/php_codesniffer": "^3.6",
-        "vimeo/psalm": "^4.15"
+        "vimeo/psalm": "^4.9"
     },
     "autoload": {
         "psr-4": {
@@ -83,7 +85,10 @@
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
     },
     "minimum-stability": "dev",
     "prefer-stable": true

@@ -35,8 +35,6 @@ RUN apk add --no-cache php8 \
     php8-tokenizer \
     php8-pecl-redis
 
-RUN ln -s /usr/bin/php8 /usr/bin/php
-
 # Installing composer
 RUN curl -sS https://getcomposer.org/installer -o composer-setup.php
 RUN php composer-setup.php --install-dir=/usr/local/bin --filename=composer

@@ -5,7 +5,7 @@ namespace App\Helpers;
 use Illuminate\Database\Eloquent\Model;
 use App\Exceptions\ModelDeletionException;
 
-trait DeleteOrFail
+trait DeleteOrThrow
 {
     /**
      * Instantiate a new model instance from the model implementing this trait.
@@ -26,7 +26,7 @@ trait DeleteOrFail
      *
      * @throws \App\Exceptions\ModelDeletionException
      */
-    public static function deleteOrFail(int $id): Model
+    public static function deleteOrThrow(int $id): Model
     {
         $model = self::model()->findOrFail($id);
 

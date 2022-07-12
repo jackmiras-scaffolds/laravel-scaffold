@@ -5,10 +5,10 @@ namespace App\Helpers;
 use Illuminate\Database\Eloquent\Model;
 use App\Exceptions\ModelUpdatingException;
 
-trait UpdateOrFail
+trait UpdateOrThrow
 {
     /**
-     * Instantiate a new model instance from the model implementing this trait.
+     * Instantiate the model implementing this trait by the model's class name.
      *
      * @return Model
      */
@@ -27,7 +27,7 @@ trait UpdateOrFail
      *
      * @throws \App\Exceptions\ModelUpdatingException
      */
-    public static function updateOrFail(int $id, array $attributes): Model
+    public static function updateOrThrow(int $id, array $attributes): Model
     {
         $model = self::model()->findOrFail($id)->fill($attributes);
 

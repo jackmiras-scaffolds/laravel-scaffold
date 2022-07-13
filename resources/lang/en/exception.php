@@ -11,7 +11,7 @@ return [
     ],
     'model_not_deleted' => [
         'help' => 'Check your deleting parameter and try again',
-        'error' => ':model with id :id not updated.'
+        'error' => ':model with id :id not deleted.'
     ],
     'user_not_present' => [
         'help' => 'Perform login again.',
